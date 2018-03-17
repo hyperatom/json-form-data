@@ -1,0 +1,35 @@
+{
+  "name": "json-form-data",
+  "version": "0.0.1",
+  "description": "A library to convert javascript objects into form data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyperatom/json-form-data.git"
+  },
+  "keywords": [
+    "json",
+    "formdata",
+    "form",
+    "data",
+    "convert"
+  ],
+  "author": "Adam Barrell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyperatom/json-form-data/issues"
+  },
+  "homepage": "https://github.com/hyperatom/json-form-data#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "karma": "^2.0.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^5.0.4"
+  }
+}
