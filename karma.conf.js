@@ -7,8 +7,13 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_ERROR,
         browsers: ['ChromeHeadless'],
-        autoWatch: false,
-        singleRun: true,
-        concurrency: Infinity
+        autoWatch: true,
+        singleRun: false,
+        concurrency: Infinity,
+        client: {
+            mocha: {
+                require: [require.resolve('./src/jsonToFormData')]
+            }
+        }
     })
 };
