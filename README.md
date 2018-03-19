@@ -4,6 +4,7 @@ A library to convert javascript objects into form data.
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
 
 ## Features
+* Supports CommonJS and AMD module loaders
 * Converts nested objects and arrays
 * Compatible with legacy web browsers
 * Works with all primitive data types
