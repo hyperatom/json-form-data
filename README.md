@@ -2,6 +2,7 @@
 A library to convert javascript objects into form data.
 
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)](https://www.browserstack.com/automate/public-build/YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)
 
 ## Features
 * Supports CommonJS and AMD module loaders
@@ -40,3 +41,7 @@ var testObject = {
 
 var formData = window.jsonToFormData(testObject);
 ```
+
+[![BrowserStack Logo](http://browserstack.com/)](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)
+
+We use BrowserStack to automate our testing against multiple browsers to ensure compatibility with legacy browsers.
