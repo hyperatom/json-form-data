@@ -18,8 +18,24 @@ var testObject = {
     prop3: null,
     prop4: undefined,
     prop5: true,
-    prop6: false
+    prop6: false,
+    prop7: {
+        prop1: 'test',
+        prop2: 2,
+        prop3: null,
+        prop4: undefined,
+        prop5: true,
+        prop6: false,
+        prop7: [
+            'test', 
+            2, 
+            null, 
+            undefined, 
+            true, 
+            false
+        ] 
+    }
 };
 
-window.jsonToFormData(testObject);
+var formData = window.jsonToFormData(testObject);
 ```
