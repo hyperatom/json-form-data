@@ -42,6 +42,6 @@ var testObject = {
 var formData = window.jsonToFormData(testObject);
 ```
 
-[![BrowserStack Logo](http://browserstack.com/)](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)
+[![BrowserStack Logo](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)](http://browserstack.com/)
 
 We use BrowserStack to automate our testing against multiple browsers to ensure compatibility with legacy browsers.
