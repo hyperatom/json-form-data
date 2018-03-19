@@ -1,50 +1,50 @@
 (function() {
 
-    function isReallyArray(val) {
+    function isArray(val) {
 
         return toString.call(val) === '[object Array]';
     }
 
-    function isReallyObject(val) {
+    function isObject(val) {
 
-        return !isReallyArray(val) && typeof val === 'object' && !!val;
+        return !isArray(val) && typeof val === 'object' && !!val;
     }
 
-    window.jsonToFormData = function(data, parentKey, previousFormData) {
+    window.jsonToFormData = function(jsonObject, parentKey, carryFormData) {
 
-        var formData = previousFormData || new FormData();
+        var formData = carryFormData || new FormData();
 
         var index = 0;
 
-        for (var key in data) {
+        for (var key in jsonObject) {
 
-            if (data.hasOwnProperty(key)) {
+            if (jsonObject.hasOwnProperty(key)) {
 
-                if (data[key] !== null && data[key] !== undefined) {
+                if (jsonObject[key] !== null && jsonObject[key] !== undefined) {
 
                     var propName = parentKey || key;
 
-                    if (parentKey && isReallyObject(data)) {
+                    if (parentKey && isObject(jsonObject)) {
 
                         propName = parentKey + '[' + key + ']';
                     }
 
-                    if (parentKey && isReallyArray(data)) {
+                    if (parentKey && isArray(jsonObject)) {
 
                         propName = parentKey + '[' + index + ']';
                     }
 
-                    if (typeof data[key] === 'boolean') {
+                    if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
 
-                        formData.append(key, +data[key] ? '1': '0');
+                        window.jsonToFormData(jsonObject[key], propName, formData);
 
-                    } else if (isReallyArray(data[key]) || isReallyObject(data[key])) {
+                    } else if (typeof jsonObject[key] === 'boolean') {
 
-                        return window.jsonToFormData(data[key], propName, formData);
+                        formData.append(propName, +jsonObject[key] ? '1': '0');
 
                     } else {
 
-                        formData.append(propName, data[key]);
+                        formData.append(propName, jsonObject[key]);
                     }
                 }
             }
