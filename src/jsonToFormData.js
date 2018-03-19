@@ -1,4 +1,23 @@
-(function() {
+(function (root, factory) {
+
+    if (typeof define === 'function' && define.amd) {
+
+        define([], function() {
+            return (root.jsonToFormData = factory());
+        });
+
+    } else if (typeof module === 'object' && module.exports) {
+
+        module.exports = (root.jsonToFormData = factory());
+
+    } else {
+
+        root.jsonToFormData = factory();
+    }
+
+}(this, function() {
+
+    console.log(arguments);
 
     function isArray(val) {
 
@@ -10,7 +29,7 @@
         return !isArray(val) && typeof val === 'object' && !!val;
     }
 
-    window.jsonToFormData = function(jsonObject, parentKey, carryFormData) {
+    return function(jsonObject, parentKey, carryFormData) {
 
         var formData = carryFormData || new FormData();
 
@@ -54,4 +73,4 @@
 
         return formData;
     };
-})();
+}));
