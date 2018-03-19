@@ -4,7 +4,8 @@
   "description": "A library to convert javascript objects into form data.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "test:watch": "karma start --single-run=false --auto-watch=true"
   },
   "repository": {
     "type": "git",

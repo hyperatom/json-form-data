@@ -7,8 +7,8 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_ERROR,
         browsers: ['ChromeHeadless'],
-        autoWatch: true,
-        singleRun: false,
+        autoWatch: false,
+        singleRun: true,
         concurrency: Infinity,
         client: {
             mocha: {
