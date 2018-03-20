@@ -8,7 +8,7 @@ A library to convert javascript objects into form data.
 * Supports CommonJS and AMD module loaders
 * Converts nested objects and arrays
 * Compatible with legacy web browsers
-* Works with all primitive data types
+* Works with primitive and File data types
 * Skips null and undefined values
 * Good unit test coverage
 
@@ -42,6 +42,8 @@ var testObject = {
 var formData = window.jsonToFormData(testObject);
 ```
 
-[![BrowserStack Logo](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)](http://browserstack.com/)
+<a href="http://browserstack.com/">
+    <img alt="BrowserStack Logo" src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" width="200" />
+</a>
 
 We use BrowserStack to automate our testing against multiple browsers to ensure compatibility with legacy browsers.

@@ -53,7 +53,11 @@
                         propName = parentKey + '[' + index + ']';
                     }
 
-                    if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
+                    if (jsonObject[key] instanceof File) {
+
+                        formData.append(propName, jsonObject[key]);
+
+                    } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
 
                         window.jsonToFormData(jsonObject[key], propName, formData);
 

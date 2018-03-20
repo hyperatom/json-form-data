@@ -23,6 +23,19 @@ describe('jsonToFormData', function() {
         expect(formDataResult.has('prop2')).to.equal(false);
     });
 
+    xit('should append File objects', function() {
+
+        var testObject = {
+            prop1: new File(['some file content'], 'my_file.txt')
+        };
+
+        var formDataResult = window.jsonToFormData(testObject);
+
+        var formDataFile = formDataResult.get('prop1');
+
+        expect(formDataFile instanceof File).to.equal(true);
+    });
+
     it('should convert true to 1 and false to 0', function() {
 
         var testObject = {
