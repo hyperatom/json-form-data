@@ -5,11 +5,6 @@ const includePolyfills = function(files) {
         included: true,
         served: true,
         watched: false
-    }, {
-        pattern: __dirname + '/node_modules/formdata-polyfill/FormData.js',
-        included: true,
-        served: true,
-        watched: false
     });
 };
 
@@ -55,6 +50,7 @@ module.exports = function(config) {
         client: {
             mocha: {
                 require: [
+                    require.resolve('formdata-polyfill'),
                     require.resolve('./src/jsonToFormData')
                 ]
             }
