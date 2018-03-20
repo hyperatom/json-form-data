@@ -20,7 +20,8 @@ module.exports = function(config) {
         'edge_16_windows_10',
         'edge_15_windows_10',
         'edge_14_windows_10',
-        'ie_11_windows_10'
+        'ie_11_windows_10',
+        'ie_10_windows_10'
     ];
 
     config.set({
