@@ -38,8 +38,7 @@ module.exports = function(config) {
         client: {
             mocha: {
                 require: [
-                    require.resolve('js-polyfills/es6'),
-                    require.resolve('js-polyfills/typedarray'),
+                    require.resolve('core-js/es6/weak-map'),
                     require.resolve('formdata-polyfill'),
                     require.resolve('./src/jsonToFormData')
                 ]
