@@ -94,6 +94,13 @@ module.exports = function(config) {
                 browser_version: '11.0',
                 os: 'Windows',
                 os_version: '10'
+            },
+            ie_10_windows_10: {
+                base: 'BrowserStack',
+                browser: 'IE',
+                browser_version: '10.0',
+                os: 'Windows',
+                os_version: '8'
             }
         }
     })
