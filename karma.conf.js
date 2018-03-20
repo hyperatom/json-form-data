@@ -1,3 +1,17 @@
+const fixMocha = function(files) {
+
+    console.log(__dirname + '/node_modules/weakmap-polyfill/weakmap-polyfill.js');
+
+    files.unshift({
+        pattern: __dirname + '/node_modules/weakmap-polyfill/weakmap-polyfill.js',
+        included: true,
+        served: true,
+        watched: false
+    });
+};
+
+fixMocha.$inject = ['config.files'];
+
 module.exports = function(config) {
 
     var localReporters = [
@@ -25,7 +39,7 @@ module.exports = function(config) {
     ];
 
     config.set({
-        frameworks: ['mocha', 'chai'],
+        frameworks: ['mocha', 'chai', 'inline-mocha-fix'],
         files: ['tests/**/*.js'],
         reporters: process.env.CI === 'true' ? ciReporters : localReporters,
         browsers: process.env.CI === 'true' ? ciBrowsers : localBrowsers,
@@ -38,12 +52,17 @@ module.exports = function(config) {
         client: {
             mocha: {
                 require: [
-                    require.resolve('weakmap-polyfill'),
                     require.resolve('formdata-polyfill'),
                     require.resolve('./src/jsonToFormData')
                 ]
             }
         },
+        plugins: [
+            'karma-*',
+            {
+                'framework:inline-mocha-fix': ['factory', fixMocha]
+            }
+        ],
         browserStack: {
             project: 'json-form-data'
         },
