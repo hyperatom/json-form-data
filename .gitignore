@@ -1,2 +1,3 @@
 /.idea
 /node_modules
+/ci_test.sh

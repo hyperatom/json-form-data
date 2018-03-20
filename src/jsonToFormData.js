@@ -17,9 +17,9 @@
 
 }(this, function() {
 
-    console.log(arguments);
-
     function isArray(val) {
+
+        var toString = ({}).toString;
 
         return toString.call(val) === '[object Array]';
     }
