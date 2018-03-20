@@ -8,7 +8,7 @@ A library to convert javascript objects into form data.
 * Supports CommonJS and AMD module loaders
 * Converts nested objects and arrays
 * Compatible with legacy web browsers
-* Works with primitive and File data types
+* Works with primitive data types and File blobs
 * Skips null and undefined values
 * Good unit test coverage
 
@@ -21,7 +21,8 @@ var testObject = {
     prop4: undefined,
     prop5: true,
     prop6: false,
-    prop7: {
+    prop7: new File(['file content'], 'my_file.txt'),
+    prop8: {
         prop1: 'test',
         prop2: 2,
         prop3: null,
@@ -35,7 +36,7 @@ var testObject = {
             undefined, 
             true, 
             false
-        ] 
+        ]
     }
 };
 
