@@ -29,7 +29,7 @@
         return !isArray(val) && typeof val === 'object' && !!val;
     }
 
-    return function(jsonObject, parentKey, carryFormData) {
+    function convert(jsonObject, parentKey, carryFormData) {
 
         var formData = carryFormData || new FormData();
 
@@ -57,9 +57,16 @@
 
                         formData.append(propName, jsonObject[key]);
 
+                    }  else if (jsonObject[key] instanceof FileList) {
+
+                        for (var j = 0; j < jsonObject[key].length; j++) {
+
+                            formData.append(propName + '[' + j + ']', jsonObject[key].item(j));
+                        }
+
                     } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
 
-                        window.jsonToFormData(jsonObject[key], propName, formData);
+                        convert(jsonObject[key], propName, formData);
 
                     } else if (typeof jsonObject[key] === 'boolean') {
 
@@ -76,5 +83,7 @@
         }
 
         return formData;
-    };
+    }
+
+    return convert;
 }));

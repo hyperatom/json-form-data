@@ -8,7 +8,8 @@ A library to convert javascript objects into form data.
 * Supports CommonJS and AMD module loaders
 * Converts nested objects and arrays
 * Compatible with legacy web browsers
-* Works with primitive data types and File blobs
+* Supports all primitive data types
+* Supports File and FileList data types
 * Skips null and undefined values
 * Good unit test coverage
 
