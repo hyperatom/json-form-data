@@ -62,44 +62,44 @@ var formData = window.jsonToFormData(testObject);
 **Output as multipart/formdata**
 
 ```
-testObject[prop1]
+prop1
 test
 
-testObject[prop2]
+prop2
 2
 
-testObject[prop5]
+prop5
 1
 
-testObject[prop6]
+prop6
 0
 
-testObject[prop7]
+prop7
 Content-Disposition: form-data; name="My File"; filename="my_file.txt"
 Content-Type: text/plain
 
-testObject[prop8][prop1]
+prop8[prop1]
 test
 
-testObject[prop8][prop2]
+prop8[prop2]
 2
 
-testObject[prop8][prop5]
+prop8[prop5]
 1
 
-testObject[prop8][prop6]
+prop8[prop6]
 0
 
-testObject[prop8][prop7][0]
+prop8[prop7][0]
 test
 
-testObject[prop8][prop7][1]
+prop8[prop7][1]
 2
 
-testObject[prop8][prop7][2]
+prop8[prop7][2]
 1
 
-testObject[prop8][prop7][3]
+prop8[prop7][3]
 0
 
 ```
