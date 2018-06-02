@@ -19,7 +19,7 @@ This library converts a JSON object into FormData,
 allowing files and primitive data to be sent to a server in a single HTTP request.
 
 Single Page Web Applications (SPA's) primarily use JSON formatted payloads. 
-This causes problems when you needs to send a file along with additional data,
+This causes problems when you need to send a file along with additional data,
 as files cannot be sent to a server in a JSON formatted payload.
 
 This library addresses the limitations of similar libraries by allowing conversion of deeply nested JSON objects,
