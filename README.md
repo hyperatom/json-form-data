@@ -1,5 +1,5 @@
 # json-form-data
-A library to convert javascript objects into form data.
+A library to convert JavasScript objects into FormData.
 
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)](https://www.browserstack.com/automate/public-build/YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)
@@ -13,7 +13,22 @@ A library to convert javascript objects into form data.
 * Skips null and undefined values
 * Good unit test coverage
 
-## Usage
+## Overview
+
+This library converts a JSON object into FormData, 
+allowing files and primitive data to be sent to a server in a single HTTP request.
+
+Single Page Web Applications (SPA's) primarily use JSON formatted payloads. 
+This causes problems when you needs to send a file along with additional data,
+as files cannot be sent to a server in a JSON formatted payload.
+
+This library addresses the limitations of similar libraries by allowing conversion of deeply nested JSON objects,
+better unit test coverage and exclusion of `null` and `undefined` values from the resulting FormData.
+
+## Example
+
+**Input as JSON**
+
 ```
 var testObject = {
     prop1: 'test',
@@ -43,6 +58,52 @@ var testObject = {
 
 var formData = window.jsonToFormData(testObject);
 ```
+
+**Output as multipart/formdata**
+
+```
+testObject[prop1]
+test
+
+testObject[prop2]
+2
+
+testObject[prop5]
+1
+
+testObject[prop6]
+0
+
+testObject[prop7]
+Content-Disposition: form-data; name="My File"; filename="my_file.txt"
+Content-Type: text/plain
+
+testObject[prop8][prop1]
+test
+
+testObject[prop8][prop2]
+2
+
+testObject[prop8][prop5]
+1
+
+testObject[prop8][prop6]
+0
+
+testObject[prop8][prop7][0]
+test
+
+testObject[prop8][prop7][1]
+2
+
+testObject[prop8][prop7][2]
+1
+
+testObject[prop8][prop7][3]
+0
+
+```
+
 
 ## Browser Support
 
