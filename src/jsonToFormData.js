@@ -29,7 +29,18 @@
         return !isArray(val) && typeof val === 'object' && !!val;
     }
 
-    function convert(jsonObject, parentKey, carryFormData) {
+    function merge(object1, object2) {
+        object2 = object2 || {}
+        return [object1, object2]
+            .reduce(function (r, o) {
+                Object.keys(o).forEach(function (k) {
+                    r[k] = o[k];
+                });
+                return r;
+            }, {});
+    }
+
+    function doConvert(jsonObject, parentKey, carryFormData, options) {
 
         var formData = carryFormData || new FormData();
 
@@ -50,7 +61,11 @@
 
                     if (parentKey && isArray(jsonObject)) {
 
-                        propName = parentKey + '[' + index + ']';
+                        index_string = ''
+                        if (isArray(jsonObject[key]) || isObject(jsonObject[key]) || options.showLeafArrayIndexes ) {
+                            index_string = index
+                        }
+                        propName = parentKey + '[' + index_string + ']';
                     }
 
                     if (jsonObject[key] instanceof File) {
@@ -66,7 +81,7 @@
 
                     } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
 
-                        convert(jsonObject[key], propName, formData);
+                        doConvert(jsonObject[key], propName, formData, options);
 
                     } else if (typeof jsonObject[key] === 'boolean') {
 
@@ -83,6 +98,16 @@
         }
 
         return formData;
+    }
+
+    function convert(jsonObject, options) {
+        var defaultOptions = {
+            showLeafArrayIndexes: true,
+        };
+
+        options = merge(defaultOptions, options);
+
+        return doConvert(jsonObject, undefined, undefined, options);
     }
 
     return convert;

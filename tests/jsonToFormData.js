@@ -1,3 +1,11 @@
+function logFormData(formData) {
+    console.log('=========');
+    for(var pair of formData.entries()) {
+        console.log(pair[0]+ ' => '+ pair[1]);
+    }
+    console.log('^^^^^^^^^');
+}
+
 describe('jsonToFormData', function() {
 
     it('should be attached to the window', function() {
@@ -48,6 +56,20 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop1[1]')).to.equal('test');
         expect(formDataResult.get('prop1[2]')).to.equal('1');
         expect(formDataResult.get('prop1[3]')).to.equal('0');
+    });
+
+    it('should convert arrays without showing indexes on simple arrays', function() {
+
+        var testObject = {
+            prop1: [11, 'test', true, false]
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, {showLeafArrayIndexes: false});
+
+        expect(formDataResult.getAll('prop1[]')[0]).to.equal('11');
+        expect(formDataResult.getAll('prop1[]')[1]).to.equal('test');
+        expect(formDataResult.getAll('prop1[]')[2]).to.equal('1');
+        expect(formDataResult.getAll('prop1[]')[3]).to.equal('0');
     });
 
     it('should convert a shallow object', function() {
@@ -191,6 +213,51 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop7[0][prop2]')).to.equal('2');
         expect(formDataResult.get('prop7[0][prop5]')).to.equal('1');
         expect(formDataResult.get('prop7[0][prop6]')).to.equal('0');
+
+        expect(formDataResult.get('prop7[1][prop1]')).to.equal('another_test');
+        expect(formDataResult.get('prop7[1][prop2]')).to.equal('3');
+        expect(formDataResult.get('prop7[1][prop5]')).to.equal('0');
+        expect(formDataResult.get('prop7[1][prop6]')).to.equal('1');
+    });
+
+    it('should convert an array of objects and for simple arrays not display indexes', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false,
+            prop7: [{
+                prop1: 'test',
+                prop2: 2,
+                prop3: null,
+                prop4: undefined,
+                prop5: true,
+                prop6: false,
+                prop7: [11, 'test', true, false]
+            }, {
+                prop1: 'another_test',
+                prop2: 3,
+                prop3: null,
+                prop4: undefined,
+                prop5: false,
+                prop6: true
+            }]
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, {showLeafArrayIndexes: false});
+
+        expect(formDataResult.get('prop7[0][prop1]')).to.equal('test');
+        expect(formDataResult.get('prop7[0][prop2]')).to.equal('2');
+        expect(formDataResult.get('prop7[0][prop5]')).to.equal('1');
+        expect(formDataResult.get('prop7[0][prop6]')).to.equal('0');
+
+        expect(formDataResult.getAll('prop7[0][prop7][]')[0]).to.equal('11');
+        expect(formDataResult.getAll('prop7[0][prop7][]')[1]).to.equal('test');
+        expect(formDataResult.getAll('prop7[0][prop7][]')[2]).to.equal('1');
+        expect(formDataResult.getAll('prop7[0][prop7][]')[3]).to.equal('0');
 
         expect(formDataResult.get('prop7[1][prop1]')).to.equal('another_test');
         expect(formDataResult.get('prop7[1][prop2]')).to.equal('3');
