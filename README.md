@@ -113,7 +113,8 @@ prop8[prop7][3]
 
 ## Contributors
 
-<a href="https://github.com/illiatdesdindes">illiatdesdindes</a>
+- <a href="https://github.com/hyperatom">hyperatom</a>
+- <a href="https://github.com/illiatdesdindes">illiatdesdindes</a>
 
 ## Sponsors
 
