@@ -1,6 +1,6 @@
 {
   "name": "json-form-data",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A library to convert javascript objects into form data.",
   "main": "./src/jsonToFormData.js",
   "scripts": {
@@ -25,15 +25,15 @@
   },
   "homepage": "https://github.com/hyperatom/json-form-data#readme",
   "devDependencies": {
-    "chai": "^4.1.2",
-    "formdata-polyfill": "^3.0.9",
-    "karma": "^2.0.0",
+    "chai": "^4.2.0",
+    "formdata-polyfill": "^3.0.13",
+    "karma": "^3.1.4",
     "karma-browserstack-launcher": "^1.4.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
-    "mocha": "^5.0.4",
+    "mocha": "^5.2.0",
     "weakmap-polyfill": "^2.0.0"
   }
 }

@@ -36,7 +36,11 @@ module.exports = function(config) {
         'ie_10_windows_10'
     ];
 
+    var build = Math.random().toString(36).substring(2, 15);
+
     config.set({
+        browserNoActivityTimeout: 120000,
+        browserDisconnectTimeout: 120000,
         frameworks: ['mocha', 'chai', 'include-polyfills'],
         files: ['tests/**/*.js'],
         reporters: process.env.CI === 'true' ? ciReporters : localReporters,
@@ -62,7 +66,8 @@ module.exports = function(config) {
             }
         ],
         browserStack: {
-            project: 'json-form-data'
+            project: 'json-form-data',
+            build: build
         },
         customLaunchers: {
             chrome_latest_mac: {
