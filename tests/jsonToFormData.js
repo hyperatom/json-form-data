@@ -197,4 +197,30 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop7[1][prop5]')).to.equal('0');
         expect(formDataResult.get('prop7[1][prop6]')).to.equal('1');
     });
+
+    it('should use the showLeafArrayIndexes option to hide leaf array indexes', function() {
+
+        var testObject = {
+            prop1: [
+                [11, 'test', true, false]
+            ],
+            prop2: {
+                prop3: [
+                    [11, 'test', true, false]
+                ]
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, { showLeafArrayIndexes: false });
+
+        expect(formDataResult.getAll('prop1[0][]')[0]).to.equal('11');
+        expect(formDataResult.getAll('prop1[0][]')[1]).to.equal('test');
+        expect(formDataResult.getAll('prop1[0][]')[2]).to.equal('1');
+        expect(formDataResult.getAll('prop1[0][]')[3]).to.equal('0');
+
+        expect(formDataResult.getAll('prop2[prop3][0][]')[0]).to.equal('11');
+        expect(formDataResult.getAll('prop2[prop3][0][]')[1]).to.equal('test');
+        expect(formDataResult.getAll('prop2[prop3][0][]')[2]).to.equal('1');
+        expect(formDataResult.getAll('prop2[prop3][0][]')[3]).to.equal('0');
+    });
 });

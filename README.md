@@ -111,6 +111,10 @@ prop8[prop7][3]
 | :---------: | :---------: | :---------: | :---------: |
 | IE10, IE11, Edge | latest | latest | latest 
 
+## Contributors
+
+<a href="https://github.com/illiatdesdindes">illiatdesdindes</a>
+
 ## Sponsors
 
 <a href="http://browserstack.com/">

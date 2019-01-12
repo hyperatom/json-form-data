@@ -17,6 +17,21 @@
 
 }(this, function() {
 
+    function mergeObjects(object1, object2) {
+
+        var objectsToMerge = [object1, object2];
+
+        return objectsToMerge.reduce(function (carry, objectToMerge) {
+
+            Object.keys(objectToMerge).forEach(function (objectKey) {
+                carry[objectKey] = objectToMerge[objectKey];
+            });
+
+            return carry;
+
+        }, {});
+    }
+
     function isArray(val) {
 
         var toString = ({}).toString;
@@ -29,7 +44,18 @@
         return !isArray(val) && typeof val === 'object' && !!val;
     }
 
-    function convert(jsonObject, parentKey, carryFormData) {
+    function convert(jsonObject, options) {
+
+        var defaultOptions = {
+            showLeafArrayIndexes: true
+        };
+
+        var mergedOptions = mergeObjects(defaultOptions, options || {});
+
+        return convertRecursively(jsonObject, mergedOptions);
+    }
+
+    function convertRecursively(jsonObject, options, parentKey, carryFormData) {
 
         var formData = carryFormData || new FormData();
 
@@ -50,7 +76,11 @@
 
                     if (parentKey && isArray(jsonObject)) {
 
-                        propName = parentKey + '[' + index + ']';
+                        if (isArray(jsonObject[key]) || isObject(jsonObject[key]) || options.showLeafArrayIndexes ) {
+                            propName = parentKey + '[' + index + ']';
+                        } else {
+                            propName = parentKey + '[]';
+                        }
                     }
 
                     if (jsonObject[key] instanceof File) {
@@ -66,7 +96,7 @@
 
                     } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
 
-                        convert(jsonObject[key], propName, formData);
+                        convertRecursively(jsonObject[key], options, propName, formData);
 
                     } else if (typeof jsonObject[key] === 'boolean') {
 
