@@ -25,7 +25,7 @@ as files cannot be sent to a server in a JSON formatted payload.
 This library addresses the limitations of similar libraries by allowing conversion of deeply nested JSON objects,
 better unit test coverage and exclusion of `null` and `undefined` values from the resulting FormData.
 
-## Example
+## Usage
 
 **Input as JSON**
 
@@ -56,7 +56,11 @@ var testObject = {
     }
 };
 
-var formData = window.jsonToFormData(testObject);
+var options = {
+    showLeafArrayIndexes: true
+};
+
+var formData = window.jsonToFormData(testObject, options);
 ```
 
 **Output as multipart/formdata**
@@ -104,10 +108,15 @@ prop8[prop7][3]
 
 ```
 
+## Options
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `showLeafArrayIndexes` | `true` | Shows or hides indexes for items in array leaf nodes. |
 
 ## Browser Support
 
-| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br>IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br>Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br>Chrome | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br>Safari |
+| <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br> IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br> Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br> Chrome | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br> Safari |
 | :---------: | :---------: | :---------: | :---------: |
 | IE10, IE11, Edge | latest | latest | latest 
 
