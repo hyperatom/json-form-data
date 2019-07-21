@@ -1,6 +1,6 @@
 {
   "name": "json-form-data",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A library to convert javascript objects into form data.",
   "main": "./src/jsonToFormData.js",
   "scripts": {

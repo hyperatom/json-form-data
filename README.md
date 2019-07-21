@@ -1,5 +1,5 @@
 # json-form-data
-A library to convert JavasScript objects into FormData.
+A library to convert JavasScript objects into form data.
 
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)](https://www.browserstack.com/automate/public-build/YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)
@@ -11,11 +11,12 @@ A library to convert JavasScript objects into FormData.
 * Supports all primitive data types
 * Supports File and FileList data types
 * Skips null and undefined values
+* Custom value mappings
 * Good unit test coverage
 
 ## Overview
 
-This library converts a JSON object into FormData, 
+This library converts a JSON object into form data, 
 allowing files and primitive data to be sent to a server in a single HTTP request.
 
 Single Page Web Applications (SPA's) primarily use JSON formatted payloads. 
@@ -23,7 +24,10 @@ This causes problems when you need to send a file along with additional data,
 as files cannot be sent to a server in a JSON formatted payload.
 
 This library addresses the limitations of similar libraries by allowing conversion of deeply nested JSON objects,
-better unit test coverage and exclusion of `null` and `undefined` values from the resulting FormData.
+better unit test coverage and exclusion of `null` and `undefined` values from the resulting form data.
+
+A custom mapping function allows JSON values to be transformed before they are appended to form data.
+You can use this to provide your server side with the values it expects. 
 
 ## Usage
 
@@ -57,7 +61,14 @@ var testObject = {
 };
 
 var options = {
-    showLeafArrayIndexes: true
+    showLeafArrayIndexes: true,
+    includeNullValues: false,
+    mapping: function(value) {
+        if (typeof value === 'boolean') {
+            return +value ? '1': '0';
+        }
+        return value;
+    }
 };
 
 var formData = window.jsonToFormData(testObject, options);
@@ -112,7 +123,9 @@ prop8[prop7][3]
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `showLeafArrayIndexes` | `true` | Shows or hides indexes for items in array leaf nodes. |
+| `showLeafArrayIndexes` | `true` | Shows indexes for items in array leaf nodes. |
+| `includeNullValues` | `false` | Includes null values in the form data. |
+| `mapping` | `x => y` | Overrides the default value mappings `true => '1'` and `false => '0'`.
 
 ## Browser Support
 

@@ -39,15 +39,22 @@
         return toString.call(val) === '[object Array]';
     }
 
-    function isObject(val) {
+    function isJsonObject(val) {
 
-        return !isArray(val) && typeof val === 'object' && !!val;
+        return !isArray(val) && typeof val === 'object' && !!val && !(val instanceof Blob);
     }
 
     function convert(jsonObject, options) {
 
         var defaultOptions = {
-            showLeafArrayIndexes: true
+            showLeafArrayIndexes: true,
+            includeNullValues: false,
+            mapping: function(value) {
+                if (typeof value === 'boolean') {
+                    return +value ? '1': '0';
+                }
+                return value;
+            }
         };
 
         var mergedOptions = mergeObjects(defaultOptions, options || {});
@@ -65,47 +72,41 @@
 
             if (jsonObject.hasOwnProperty(key)) {
 
-                if (jsonObject[key] !== null && jsonObject[key] !== undefined) {
+                var propName = parentKey || key;
+                var value = options.mapping(jsonObject[key]);
 
-                    var propName = parentKey || key;
+                if (parentKey && isJsonObject(jsonObject)) {
 
-                    if (parentKey && isObject(jsonObject)) {
+                    propName = parentKey + '[' + key + ']';
+                }
 
-                        propName = parentKey + '[' + key + ']';
-                    }
+                if (parentKey && isArray(jsonObject)) {
 
-                    if (parentKey && isArray(jsonObject)) {
-
-                        if (isArray(jsonObject[key]) || isObject(jsonObject[key]) || options.showLeafArrayIndexes ) {
-                            propName = parentKey + '[' + index + ']';
-                        } else {
-                            propName = parentKey + '[]';
-                        }
-                    }
-
-                    if (jsonObject[key] instanceof File) {
-
-                        formData.append(propName, jsonObject[key]);
-
-                    }  else if (jsonObject[key] instanceof FileList) {
-
-                        for (var j = 0; j < jsonObject[key].length; j++) {
-
-                            formData.append(propName + '[' + j + ']', jsonObject[key].item(j));
-                        }
-
-                    } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
-
-                        convertRecursively(jsonObject[key], options, propName, formData);
-
-                    } else if (typeof jsonObject[key] === 'boolean') {
-
-                        formData.append(propName, +jsonObject[key] ? '1': '0');
-
+                    if (isArray(value) || options.showLeafArrayIndexes ) {
+                        propName = parentKey + '[' + index + ']';
                     } else {
-
-                        formData.append(propName, jsonObject[key]);
+                        propName = parentKey + '[]';
                     }
+                }
+
+                if (isArray(value) || isJsonObject(value)) {
+
+                    convertRecursively(value, options, propName, formData);
+
+                } else if (value instanceof FileList) {
+
+                    for (var j = 0; j < value.length; j++) {
+
+                        formData.append(propName + '[' + j + ']', value.item(j));
+                    }
+
+                } else if (value instanceof Blob) {
+
+                    formData.append(propName, value, value.name);
+
+                } else if (((value === null && options.includeNullValues) || value !== null) && value !== undefined) {
+
+                    formData.append(propName, value);
                 }
             }
 

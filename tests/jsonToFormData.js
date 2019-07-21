@@ -52,13 +52,17 @@ describe('jsonToFormData', function() {
 
     it('should convert a shallow object', function() {
 
+        var file = new Blob(['file contents'], { type: 'text/plain' });
+        file.name = "filename.txt";
+
         var testObject = {
             prop1: 'test',
             prop2: 2,
             prop3: null,
             prop4: undefined,
             prop5: true,
-            prop6: false
+            prop6: false,
+            prop7: file
         };
 
         var formDataResult = window.jsonToFormData(testObject);
@@ -67,6 +71,9 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop2')).to.equal('2');
         expect(formDataResult.get('prop5')).to.equal('1');
         expect(formDataResult.get('prop6')).to.equal('0');
+
+        expect(formDataResult.get('prop7').name).to.equal('filename.txt');
+        expect(formDataResult.get('prop7').type).to.equal('text/plain');
     });
 
     it('should convert a nested object', function() {
@@ -131,7 +138,7 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop7[prop7][prop6]')).to.equal('0');
     });
 
-    it('should convert an array nested with a nested object', function() {
+    it('should convert an array nested within an object', function() {
 
         var testObject = {
             prop1: 'test',
@@ -157,6 +164,32 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop7[prop7][1]')).to.equal('test');
         expect(formDataResult.get('prop7[prop7][2]')).to.equal('1');
         expect(formDataResult.get('prop7[prop7][3]')).to.equal('0');
+    });
+
+    it('should convert an object deeply nested within an array', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false,
+            prop7: {
+                prop1: 'test',
+                prop2: 2,
+                prop3: null,
+                prop4: undefined,
+                prop5: true,
+                prop6: false,
+                prop7: [11, 'test', true, false, { prop1: 'foo', prop2: 'bar' }]
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject);
+
+        expect(formDataResult.get('prop7[prop7][4][prop1]')).to.equal('foo');
+        expect(formDataResult.get('prop7[prop7][4][prop2]')).to.equal('bar');
     });
 
     it('should convert an array of objects', function() {
@@ -222,5 +255,133 @@ describe('jsonToFormData', function() {
         expect(formDataResult.getAll('prop2[prop3][0][]')[1]).to.equal('test');
         expect(formDataResult.getAll('prop2[prop3][0][]')[2]).to.equal('1');
         expect(formDataResult.getAll('prop2[prop3][0][]')[3]).to.equal('0');
+    });
+
+    it('should support custom value mappings', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false
+        };
+
+        var options = {
+            mapping: function(value) {
+                if (value === null) {
+                    return 'foo';
+                }
+                if (typeof value === 'undefined') {
+                    return 'bar';
+                }
+                if (value === true) {
+                    return 0;
+                }
+                if (value === false) {
+                    return 1;
+                }
+                return value;
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, options);
+
+        expect(formDataResult.get('prop1')).to.equal('test');
+        expect(formDataResult.get('prop2')).to.equal('2');
+        expect(formDataResult.get('prop3')).to.equal('foo');
+        expect(formDataResult.get('prop4')).to.equal('bar');
+        expect(formDataResult.get('prop5')).to.equal('0');
+        expect(formDataResult.get('prop6')).to.equal('1');
+    });
+
+    it('should exclude null and undefined values from custom value mappings', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false
+        };
+
+        var options = {
+            mapping: function(value) {
+                if (value === true) {
+                    return undefined;
+                }
+                if (value === false) {
+                    return null;
+                }
+                return value;
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, options);
+
+        expect(formDataResult.get('prop1')).to.equal('test');
+        expect(formDataResult.get('prop2')).to.equal('2');
+        expect(formDataResult.has('prop3')).to.equal(false);
+        expect(formDataResult.has('prop4')).to.equal(false);
+        expect(formDataResult.has('prop5')).to.equal(false);
+        expect(formDataResult.has('prop6')).to.equal(false);
+    });
+
+    it('should include null values when specified by options', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false
+        };
+
+        var options = {
+            includeNullValues: true
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, options);
+
+        expect(formDataResult.get('prop1')).to.equal('test');
+        expect(formDataResult.get('prop2')).to.equal('2');
+        expect(formDataResult.get('prop3')).to.equal('null');
+        expect(formDataResult.has('prop4')).to.equal(false);
+        expect(formDataResult.get('prop5')).to.equal('1');
+        expect(formDataResult.get('prop6')).to.equal('0');
+    });
+
+    it('should include null values when specified by options and returned by custom mapping', function() {
+
+        var testObject = {
+            prop1: 'test',
+            prop2: 2,
+            prop3: null,
+            prop4: undefined,
+            prop5: true,
+            prop6: false
+        };
+
+        var options = {
+            includeNullValues: true,
+            mapping: function(value) {
+                if (value === 'test') {
+                    return null;
+                }
+                return value;
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject, options);
+
+        expect(formDataResult.get('prop1')).to.equal('null');
+        expect(formDataResult.get('prop2')).to.equal('2');
+        expect(formDataResult.get('prop3')).to.equal('null');
+        expect(formDataResult.has('prop4')).to.equal(false);
+        expect(formDataResult.get('prop5')).to.equal('true');
+        expect(formDataResult.get('prop6')).to.equal('false');
     });
 });
