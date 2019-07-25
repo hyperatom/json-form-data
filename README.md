@@ -2,7 +2,7 @@
 A library to convert JavasScript objects into form data.
 
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
-[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)](https://www.browserstack.com/automate/public-build/YlVjYXpTc0RuR3BVUE5mTEdPWG9GZz09LS05cVlMTUIwSVRJUlkxd1EzbWZRR1hBPT0=--61c69b57f61170df75fcd4bc038eaa4f84425c4e)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=NTdHejVkZG1WQVllUm94dkVQbHpldElXdncydnZwU0RTU0FVMWFsUVQ0dz0tLVUrajVDdnJEYjhPWjRkdm4zZCtZK3c9PQ==--5d0c955af9cc3cada815787cfc9c834369b895f0)](https://www.browserstack.com/automate/public-build/NTdHejVkZG1WQVllUm94dkVQbHpldElXdncydnZwU0RTU0FVMWFsUVQ0dz0tLVUrajVDdnJEYjhPWjRkdm4zZCtZK3c9PQ==--5d0c955af9cc3cada815787cfc9c834369b895f0)
 
 ## Features
 * Supports CommonJS and AMD module loaders
