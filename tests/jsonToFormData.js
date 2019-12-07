@@ -384,4 +384,39 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('prop5')).to.equal('true');
         expect(formDataResult.get('prop6')).to.equal('false');
     });
+
+    it('should convert a nested object containing a file', function() {
+
+        var file = new Blob(['file contents'], { type: 'text/plain' });
+        file.name = "filename.txt";
+
+        var testObject = {
+            department: {
+                main_image: {
+                    image: file,
+                    name: 'some name',
+                    meta_tag: 'some tag'
+                },
+                title: 'some title',
+                subtitle: 'some sub title',
+                meta_tag: 'some meta tag',
+                meta_description: 'some meta description',
+                slug: 'some slug',
+                published: true
+            }
+        };
+
+        var formDataResult = window.jsonToFormData(testObject);
+
+        expect(formDataResult.get('department[main_image][image]').name).to.equal('filename.txt');
+        expect(formDataResult.get('department[main_image][image]').type).to.equal('text/plain');
+        expect(formDataResult.get('department[main_image][name]')).to.equal('some name');
+        expect(formDataResult.get('department[main_image][meta_tag]')).to.equal('some tag');
+        expect(formDataResult.get('department[title]')).to.equal('some title');
+        expect(formDataResult.get('department[subtitle]')).to.equal('some sub title');
+        expect(formDataResult.get('department[meta_tag]')).to.equal('some meta tag');
+        expect(formDataResult.get('department[meta_description]')).to.equal('some meta description');
+        expect(formDataResult.get('department[slug]')).to.equal('some slug');
+        expect(formDataResult.get('department[published]')).to.equal('1');
+    });
 });
