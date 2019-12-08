@@ -132,6 +132,12 @@ prop9[prop7][3]
 | `includeNullValues` | `false` | Includes null values in the form data. |
 | `mapping` | `x => y` | Overrides the default value mappings `true => '1'` and `false => '0'`.
 
+## CDN
+
+json-form-data is also  available via a CDN. Just include the following script tag in your page.
+
+`<script src="https://unpkg.com/json-form-data@^1/src/jsonToFormData.js" />`
+
 ## Browser Support
 
 | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/edge.png" alt="IE / Edge" width="16px" height="16px" /></br> IE / Edge | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/firefox.png" alt="Firefox" width="16px" height="16px" /></br> Firefox | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/chrome.png" alt="Chrome" width="16px" height="16px" /></br> Chrome | <img src="https://raw.githubusercontent.com/godban/browsers-support-badges/master/src/images/safari.png" alt="Safari" width="16px" height="16px" /></br> Safari |

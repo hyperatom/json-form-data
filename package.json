@@ -4,6 +4,9 @@
   "description": "A library to convert javascript objects into form data.",
   "main": "./src/jsonToFormData.js",
   "scripts": {
+    "build": "npm run beautify && npm run minify",
+    "beautify": "uglifyjs src/jsonToFormData.js --beautify --output dist/jsonToFormData.js",
+    "minify": "uglifyjs src/jsonToFormData.js --compress --mangle --source-map --output dist/jsonToFormData.min.js",
     "test": "karma start",
     "test:watch": "karma start --single-run=false --auto-watch=true"
   },
@@ -34,6 +37,7 @@
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
     "mocha": "^5.2.0",
+    "uglify-js": "^3.7.1",
     "weakmap-polyfill": "^2.0.0"
   }
 }
