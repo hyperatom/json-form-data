@@ -1,5 +1,4 @@
 (function (root, factory) {
-
     if (typeof define === 'function' && define.amd) {
 
         define([], function() {
@@ -18,25 +17,17 @@
 }(this, function() {
 
     function mergeObjects(object1, object2) {
-
-        var objectsToMerge = [object1, object2];
-
-        return objectsToMerge.reduce(function (carry, objectToMerge) {
-
+        return [object1, object2].reduce(function (carry, objectToMerge) {
             Object.keys(objectToMerge).forEach(function (objectKey) {
                 carry[objectKey] = objectToMerge[objectKey];
             });
-
             return carry;
-
         }, {});
     }
 
     function isArray(val) {
 
-        var toString = ({}).toString;
-
-        return toString.call(val) === '[object Array]';
+        return ({}).toString.call(val) === '[object Array]';
     }
 
     function isJsonObject(val) {
@@ -76,7 +67,6 @@
                 var value = options.mapping(jsonObject[key]);
 
                 if (parentKey && isJsonObject(jsonObject)) {
-
                     propName = parentKey + '[' + key + ']';
                 }
 
@@ -96,10 +86,8 @@
                 } else if (value instanceof FileList) {
 
                     for (var j = 0; j < value.length; j++) {
-
                         formData.append(propName + '[' + j + ']', value.item(j));
                     }
-
                 } else if (value instanceof Blob) {
 
                     formData.append(propName, value, value.name);
