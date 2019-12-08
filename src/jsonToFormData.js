@@ -13,7 +13,6 @@
 
         root.jsonToFormData = factory();
     }
-
 }(this, function() {
 
     function mergeObjects(object1, object2) {
@@ -101,12 +100,9 @@
                     formData.append(propName, value);
                 }
             }
-
             index++;
         }
-
         return formData;
     }
-
     return convert;
 }));
