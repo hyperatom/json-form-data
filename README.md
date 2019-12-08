@@ -2,15 +2,16 @@
 A library to convert JavasScript objects into form data.
 
 [![Build Status](https://travis-ci.org/hyperatom/json-form-data.svg?branch=master)](https://travis-ci.org/hyperatom/json-form-data)
-[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=NTdHejVkZG1WQVllUm94dkVQbHpldElXdncydnZwU0RTU0FVMWFsUVQ0dz0tLVUrajVDdnJEYjhPWjRkdm4zZCtZK3c9PQ==--5d0c955af9cc3cada815787cfc9c834369b895f0)](https://www.browserstack.com/automate/public-build/NTdHejVkZG1WQVllUm94dkVQbHpldElXdncydnZwU0RTU0FVMWFsUVQ0dz0tLVUrajVDdnJEYjhPWjRkdm4zZCtZK3c9PQ==--5d0c955af9cc3cada815787cfc9c834369b895f0)
+[![BrowserStack Status](https://automate.browserstack.com/badge.svg?badge_key=elFHOGNrR2tPTVBIUTRhNmRkTis2WXRDdEpsN29aN2tFWUJaTU5IelRQaz0tLXMwcU0rWFFWZG1yQm1BRFhDUUNxb2c9PQ==--3768e678743e72a8da61640d1224bac0bd7a8754)](https://automate.browserstack.com/public-build/elFHOGNrR2tPTVBIUTRhNmRkTis2WXRDdEpsN29aN2tFWUJaTU5IelRQaz0tLXMwcU0rWFFWZG1yQm1BRFhDUUNxb2c9PQ==--3768e678743e72a8da61640d1224bac0bd7a8754)
 
 ## Features
 * Supports CommonJS and AMD module loaders
 * Converts nested objects and arrays
 * Compatible with legacy web browsers
 * Supports all primitive data types
-* Supports File and FileList data types
-* Skips null and undefined values
+* Converts `Date` objects to ISO strings
+* Supports `File` and `FileList` data types
+* Skips `null` and `undefined` values
 * Custom value mappings
 * Good unit test coverage
 
@@ -42,7 +43,8 @@ var testObject = {
     prop5: true,
     prop6: false,
     prop7: new File(['file content'], 'my_file.txt'),
-    prop8: {
+    prop8: new Date('05 January 2020 16:52:00 GMT'),
+    prop9: {
         prop1: 'test',
         prop2: 2,
         prop3: null,
@@ -93,28 +95,31 @@ prop7
 Content-Disposition: form-data; name="My File"; filename="my_file.txt"
 Content-Type: text/plain
 
-prop8[prop1]
+prop8
+2020-01-05T16:52:00.000Z
+
+prop9[prop1]
 test
 
-prop8[prop2]
+prop9[prop2]
 2
 
-prop8[prop5]
+prop9[prop5]
 1
 
-prop8[prop6]
+prop9[prop6]
 0
 
-prop8[prop7][0]
+prop9[prop7][0]
 test
 
-prop8[prop7][1]
+prop9[prop7][1]
 2
 
-prop8[prop7][2]
+prop9[prop7][2]
 1
 
-prop8[prop7][3]
+prop9[prop7][3]
 0
 
 ```
@@ -137,6 +142,7 @@ prop8[prop7][3]
 
 - <a href="https://github.com/hyperatom">hyperatom</a>
 - <a href="https://github.com/illiatdesdindes">illiatdesdindes</a>
+- <a href="https://github.com/superhawk610">superhawk610</a>
 
 ## Sponsors
 

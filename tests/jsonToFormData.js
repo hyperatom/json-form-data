@@ -419,4 +419,15 @@ describe('jsonToFormData', function() {
         expect(formDataResult.get('department[slug]')).to.equal('some slug');
         expect(formDataResult.get('department[published]')).to.equal('1');
     });
+
+    it('should convert a date object to an ISO date formatted string', function() {
+
+        var testObject = {
+            prop1: new Date('05 January 2020 16:52:00 GMT')
+        };
+
+        var formDataResult = window.jsonToFormData(testObject);
+
+        expect(formDataResult.get('prop1')).to.equal('2020-01-05T16:52:00.000Z');
+    });
 });

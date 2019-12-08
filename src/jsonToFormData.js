@@ -41,7 +41,7 @@
 
     function isJsonObject(val) {
 
-        return !isArray(val) && typeof val === 'object' && !!val && !(val instanceof Blob);
+        return !isArray(val) && typeof val === 'object' && !!val && !(val instanceof Blob) && !(val instanceof Date);
     }
 
     function convert(jsonObject, options) {
@@ -103,6 +103,10 @@
                 } else if (value instanceof Blob) {
 
                     formData.append(propName, value, value.name);
+
+                } else if (value instanceof Date) {
+
+                    formData.append(propName, value.toISOString());
 
                 } else if (((value === null && options.includeNullValues) || value !== null) && value !== undefined) {
 
