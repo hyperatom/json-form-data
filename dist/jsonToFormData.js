@@ -23,8 +23,27 @@
     function isJsonObject(val) {
         return !isArray(val) && typeof val === "object" && !!val && !(val instanceof Blob) && !(val instanceof Date);
     }
+    function isAppendFunctionPresent(formData) {
+        return typeof formData.append === "function";
+    }
+    function isGlobalFormDataPresent() {
+        return typeof FormData === "function";
+    }
+    function getDefaultFormData() {
+        if (isGlobalFormDataPresent()) {
+            return new FormData();
+        }
+    }
     function convert(jsonObject, options) {
+        if (options && options.initialFormData) {
+            if (!isAppendFunctionPresent(options.initialFormData)) {
+                throw "initialFormData must have an append function.";
+            }
+        } else if (!isGlobalFormDataPresent()) {
+            throw "This environment does not have global form data. options.initialFormData must be specified.";
+        }
         var defaultOptions = {
+            initialFormData: getDefaultFormData(),
             showLeafArrayIndexes: true,
             includeNullValues: false,
             mapping: function(value) {
@@ -35,10 +54,9 @@
             }
         };
         var mergedOptions = mergeObjects(defaultOptions, options || {});
-        return convertRecursively(jsonObject, mergedOptions);
+        return convertRecursively(jsonObject, mergedOptions, mergedOptions.initialFormData);
     }
-    function convertRecursively(jsonObject, options, parentKey, carryFormData) {
-        var formData = carryFormData || new FormData();
+    function convertRecursively(jsonObject, options, formData, parentKey) {
         var index = 0;
         for (var key in jsonObject) {
             if (jsonObject.hasOwnProperty(key)) {
@@ -55,7 +73,7 @@
                     }
                 }
                 if (isArray(value) || isJsonObject(value)) {
-                    convertRecursively(value, options, propName, formData);
+                    convertRecursively(value, options, formData, propName);
                 } else if (value instanceof FileList) {
                     for (var j = 0; j < value.length; j++) {
                         formData.append(propName + "[" + j + "]", value.item(j));

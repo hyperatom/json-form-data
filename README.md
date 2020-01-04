@@ -13,6 +13,7 @@ A library to convert JavasScript objects into form data.
 * Supports `File` and `FileList` data types
 * Skips `null` and `undefined` values
 * Custom value mappings
+* Ability to use a custom FormData object
 * Good unit test coverage
 
 ## Overview
@@ -21,14 +22,17 @@ This library converts a JSON object into form data,
 allowing files and primitive data to be sent to a server in a single HTTP request.
 
 Single Page Web Applications (SPA's) primarily use JSON formatted payloads. 
-This causes problems when you need to send a file along with additional data,
+This causes problems when you need to send files in the same request as primitive data,
 as files cannot be sent to a server in a JSON formatted payload.
 
 This library addresses the limitations of similar libraries by allowing conversion of deeply nested JSON objects,
 better unit test coverage and exclusion of `null` and `undefined` values from the resulting form data.
 
 A custom mapping function allows JSON values to be transformed before they are appended to form data.
-You can use this to provide your server side with the values it expects. 
+You can use this to provide your server side with the values it expects.
+
+You can use json-form-data in a number of different environments including ReactNative apps and web browsers.
+A custom FormData object can be passed into the `initialFormData` option to support environments that do not have a global FormData object.
 
 ## Usage
 
@@ -62,7 +66,9 @@ var testObject = {
     }
 };
 
+// These values demonstrate the default options
 var options = {
+    initialFormData: new FormData(),
     showLeafArrayIndexes: true,
     includeNullValues: false,
     mapping: function(value) {

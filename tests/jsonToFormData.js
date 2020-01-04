@@ -430,4 +430,55 @@ describe('jsonToFormData', function() {
 
         expect(formDataResult.get('prop1')).to.equal('2020-01-05T16:52:00.000Z');
     });
+
+    it('should append data to an existing form data object', function() {
+
+        var testObject = {
+            prop1: 'foo'
+        };
+
+        var initialFormData = new FormData();
+        initialFormData.append('prop2', 'bar');
+
+        var formDataResult = window.jsonToFormData(testObject, { initialFormData: initialFormData });
+
+        expect(formDataResult.get('prop1')).to.equal('foo');
+        expect(formDataResult.get('prop2')).to.equal('bar');
+    });
+
+    it('should override data on initial form data object', function() {
+
+        var testObject = {
+            prop1: 'foo',
+            prop2: 'bar'
+        };
+
+        var initialFormData = new FormData();
+        initialFormData.append('prop1', 'baz');
+
+        var formDataResult = window.jsonToFormData(testObject, { initialFormData: initialFormData });
+
+        expect(formDataResult.get('prop1')).to.equal('baz');
+        expect(formDataResult.get('prop2')).to.equal('bar');
+    });
+
+    it('should throw exception if initial form data is not valid', function() {
+
+        var runConversion = function() {
+            window.jsonToFormData({}, { initialFormData: {} });
+        };
+
+        expect(runConversion).to.throw('initialFormData must have an append function.');
+    });
+
+    it('should throw exception if global FormData object and no initial form data', function() {
+
+        window.FormData = undefined;
+
+        var runConversion = function() {
+            window.jsonToFormData({});
+        };
+
+        expect(runConversion).to.throw('This environment does not have global form data. options.initialFormData must be specified.');
+    });
 });
