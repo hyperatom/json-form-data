@@ -143,7 +143,7 @@ prop9[prop7][3]
 
 json-form-data is also  available via a CDN. Just include the following script tag in your page.
 
-`<script src="https://unpkg.com/json-form-data@^1.6.0/dist/jsonToFormData.min.js" />`
+`<script src="https://unpkg.com/json-form-data@^1.7.0/dist/jsonToFormData.min.js" />`
 
 ## Browser Support
 
