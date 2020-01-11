@@ -134,6 +134,7 @@ prop9[prop7][3]
 
 | Option | Default | Description |
 | --- | --- | --- |
+| `initialFormData` | `new FormData()` | Existing form data which values will be appended to. |
 | `showLeafArrayIndexes` | `true` | Shows indexes for items in array leaf nodes. |
 | `includeNullValues` | `false` | Includes null values in the form data. |
 | `mapping` | `x => y` | Overrides the default value mappings `true => '1'` and `false => '0'`.
