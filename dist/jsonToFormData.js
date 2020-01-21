@@ -1,4 +1,7 @@
 (function(root, factory) {
+    if (!root) {
+        root = {};
+    }
     if (typeof define === "function" && define.amd) {
         define([], function() {
             return root.jsonToFormData = factory();
