@@ -156,6 +156,7 @@ json-form-data is also  available via a CDN. Just include the following script t
 - <a href="https://github.com/hyperatom">hyperatom</a>
 - <a href="https://github.com/illiatdesdindes">illiatdesdindes</a>
 - <a href="https://github.com/superhawk610">superhawk610</a>
+- <a href="https://github.com/Finesse">Finesse</a>
 
 ## Sponsors
 
