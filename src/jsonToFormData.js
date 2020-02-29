@@ -1,4 +1,9 @@
 (function (root, factory) {
+    // root is undefined in a Webpack bundle
+    if (!root) {
+        root = {};
+    }
+    
     if (typeof define === 'function' && define.amd) {
 
         define([], function() {
